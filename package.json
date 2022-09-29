@@ -1,8 +1,8 @@
 {
   "name": "@skilbourn/playwright-report-summary",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "generate a customizable text summary of your playwright test results",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "scripts": {
     "lint": "npx eslint . --ext .ts",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
