@@ -1,0 +1,38 @@
+{
+  "name": "@skilbourn/playwright-report-summary",
+  "version": "0.0.1",
+  "description": "generate a customizable text summary of your playwright test results",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint . --ext .ts",
+    "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
+    "test": "npx playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephenkilbourn/playwright-report-summary.git"
+  },
+  "keywords": [
+    "playwright",
+    "report"
+  ],
+  "author": "Stephen Kilbourn <stephenkilbourn@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stephenkilbourn/playwright-report-summary/issues"
+  },
+  "homepage": "https://github.com/stephenkilbourn/playwright-report-summary#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.26.1",
+    "@types/node": "^18.7.23",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "playwright": "^1.26.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  }
+}
