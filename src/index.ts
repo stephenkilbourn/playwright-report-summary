@@ -72,7 +72,6 @@ class PlaywrightReportSummary implements Reporter {
   }
 }
 
-// eslint-disable-next-line default-param-last
 function outputReport(
   stats: Stats,
   inputTemplate?: Function,
