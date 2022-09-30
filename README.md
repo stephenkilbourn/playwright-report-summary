@@ -9,11 +9,11 @@ Run following commands:
 
 ### npm
 
-`npm install @skilbournplaywright-report-summary --save-dev`
+`npm install @skilbourn/playwright-report-summary --save-dev`
 
 ### yarn
 
-`yarn add @skilbournplaywright-report-summary --dev`
+`yarn add @skilbourn/playwright-report-summary --dev`
 
 ## 📍 Configuration 📍
 
