@@ -1,10 +1,14 @@
 {
   "name": "@skilbourn/playwright-report-summary",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "generate a customizable text summary of your playwright test results",
   "main": "src/index.ts",
-  "type": "module",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist/src"
+  ],
   "scripts": {
+    "build": "tsc -p ./tsconfig.json",
     "lint": "npx eslint . --ext .ts",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "test": "npx playwright test"
