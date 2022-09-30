@@ -52,8 +52,7 @@ Formatted Avg Test Duration: 00:01 (mm:ss)
 To add a custom report leveraging your stats, create a function in the format:
 
 ```typescript
-  stats,
-) => `
+module.exports = (stats) => `
 I completed  ${stats.totalCompleted} Total Tests in ${stats.formattedDuration}.`;
 ```
 
