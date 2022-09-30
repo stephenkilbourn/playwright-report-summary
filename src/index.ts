@@ -41,8 +41,11 @@ class PlaywrightReportSummary implements Reporter {
 
   private outputFile: string;
 
-  constructor(options: { outputFile?: string } = {}) {
+  private inputTemplate: Function;
+
+  constructor(options: { outputFile?: string; inputTemplate?: Function } = {}) {
     this.outputFile = options.outputFile;
+    this.inputTemplate = options.inputTemplate;
   }
 
   onBegin(config, suite) {
@@ -65,24 +68,36 @@ class PlaywrightReportSummary implements Reporter {
     const avgTestTime = this.stats.duration / (this.stats.totalCompleted || 1);
     this.stats.formattedDuration = millisToMinuteSeconds(this.stats.duration);
     this.stats.formattedAvgTestDuration = millisToMinuteSeconds(avgTestTime);
-    outputReport(this.stats, this.outputFile);
+    outputReport(this.stats, this.inputTemplate, this.outputFile);
   }
 }
 
-function outputReport(stats: Stats, outputFile = 'results.txt') {
-  const reportString = defaultReport(
-    stats.testsInSuite,
-    stats.totalCompleted,
-    stats.expectedResults,
-    stats.unexpectedResults,
-    stats.flakyTests,
-    stats.testMarkedSkipped,
-    stats.failureFree,
-    stats.duration,
-    stats.avgTestDuration,
-    stats.formattedDuration,
-    stats.formattedAvgTestDuration,
-  );
+// eslint-disable-next-line default-param-last
+function outputReport(
+  stats: Stats,
+  inputTemplate?: Function,
+  outputFile: string = 'results.txt',
+) {
+  let reportString: string;
+
+  if (typeof inputTemplate === 'undefined') {
+    reportString = defaultReport(
+      stats.testsInSuite,
+      stats.totalCompleted,
+      stats.expectedResults,
+      stats.unexpectedResults,
+      stats.flakyTests,
+      stats.testMarkedSkipped,
+      stats.failureFree,
+      stats.duration,
+      stats.avgTestDuration,
+      stats.formattedDuration,
+      stats.formattedAvgTestDuration,
+    );
+  } else {
+    reportString = inputTemplate(stats);
+  }
+
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
   fs.writeFileSync(outputFile, reportString);
 }
