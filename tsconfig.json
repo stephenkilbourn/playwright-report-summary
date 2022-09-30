@@ -6,5 +6,6 @@
       "sourceMap": false,
       "outDir": "./dist",
       "declaration": true,
+      "allowSyntheticDefaultImports": true
   }
 }
