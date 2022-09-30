@@ -1,6 +1,6 @@
-import fs from 'fs'
+import * as fs from 'fs';
 
-import path from 'path';
+import * as path from 'path';
 
 import { Reporter, TestCase, TestResult } from '@playwright/test/reporter';
 
