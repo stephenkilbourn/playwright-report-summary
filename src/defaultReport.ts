@@ -1,24 +1,28 @@
-module.exports = (
-  testsInSuite,
-  totalCompleted,
-  expectedResults,
-  unexpectedResults,
-  flakyTests,
-  testMarkedSkipped,
-  failureFree,
-  duration,
-  avgTestDuration,
-  formattedDuration,
-  formattedAvgTestDuration,
-) => `
-Total Tests in Suite: ${testsInSuite},
-Total Tests Completed: ${totalCompleted},
-Tests Passed: ${expectedResults},
-Tests Failed: ${unexpectedResults},
-Flaky Tests: ${flakyTests},
-Test Skipped: ${testMarkedSkipped},
-Test run was failure free? ${failureFree},
-Duration in ms: ${duration},
-Average Test Duration:${avgTestDuration},
-Formatted Duration: ${formattedDuration},
-Formatted Avg Test Duration: ${formattedAvgTestDuration}`;
+import Stats from './index';
+
+export default class DefaultReport {
+  stats: Stats;
+
+  constructor(stats) {
+    this.stats = stats;
+  }
+
+  templateReport() {
+    return (
+    // eslint-disable-next-line indent
+`Total Tests in Suite: ${this.stats.testsInSuite},
+Total Tests Completed: ${this.stats.totalTestsRun},
+Tests Passed: ${this.stats.expectedResults},
+Tests Failed: ${this.stats.unexpectedResults},
+Flaky Tests: ${this.stats.flakyTests},
+Test Skipped: ${this.stats.testMarkedSkipped},
+Test run was failure free? ${this.stats.failureFree},
+Duration of CPU usage in ms: ${this.stats.durationCPU},
+Duration of entire test run in ms: ${this.stats.durationSuite},
+Average Test Duration in ms:${this.stats.avgTestDuration},
+Test Suite Duration: ${this.stats.formattedDurationSuite},
+Average Test Duration: ${this.stats.formattedAvgTestDuration},
+Number of workers used for test run: ${this.stats.workers}`
+    );
+  }
+}

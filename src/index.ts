@@ -6,34 +6,40 @@ import { Reporter, TestCase, TestResult } from '@playwright/test/reporter';
 
 import millisToMinuteSeconds from './utils';
 
-const defaultReport = require('./defaultReport');
+import DefaultReport from './defaultReport';
 
 export type Stats = {
   testsInSuite: number;
-  totalCompleted: number;
+  totalTestsRun: number;
   expectedResults: number;
   unexpectedResults: number;
   flakyTests: number;
   testMarkedSkipped: number;
   failureFree: boolean;
-  duration: number;
+  durationCPU: number;
+  durationSuite: number;
   avgTestDuration: number;
-  formattedDuration: string;
+  formattedDurationSuite: string;
   formattedAvgTestDuration: string;
+  failures: object;
+  workers: number;
 };
 
 const initialStats = (): Stats => ({
   testsInSuite: 0,
-  totalCompleted: 0,
+  totalTestsRun: 0,
   expectedResults: 0,
   unexpectedResults: 0,
   flakyTests: 0,
   testMarkedSkipped: 0,
   failureFree: true,
-  duration: 0,
+  durationCPU: 0,
+  durationSuite: 0,
   avgTestDuration: 0,
-  formattedDuration: '',
+  formattedDurationSuite: '',
   formattedAvgTestDuration: '',
+  failures: {},
+  workers: 1,
 });
 
 class PlaywrightReportSummary implements Reporter {
@@ -51,23 +57,32 @@ class PlaywrightReportSummary implements Reporter {
   onBegin(config, suite) {
     this.stats = initialStats();
     this.stats.testsInSuite = suite.allTests().length;
+    this.stats.workers = config.workers;
   }
 
   async onTestEnd(test: TestCase, result: TestResult) {
     const outcome = test.outcome();
+    const { retry } = result;
+
     if (outcome === 'expected') this.stats.expectedResults += 1;
     if (outcome === 'skipped') this.stats.testMarkedSkipped += 1;
-    if (outcome === 'unexpected') this.stats.unexpectedResults += 1;
     if (outcome === 'flaky') this.stats.flakyTests += 1;
-    this.stats.totalCompleted += 1;
-    this.stats.duration += result.duration;
+    if (outcome === 'unexpected' && retry === 0) {
+      this.stats.failures[test.title] = result.status;
+      this.stats.unexpectedResults += 1;
+    }
+    this.stats.totalTestsRun += 1;
+    this.stats.durationCPU += result.duration;
     this.stats.failureFree = this.stats.unexpectedResults === 0;
   }
 
   async onEnd() {
-    const avgTestTime = this.stats.duration / (this.stats.totalCompleted || 1);
-    this.stats.formattedDuration = millisToMinuteSeconds(this.stats.duration);
-    this.stats.formattedAvgTestDuration = millisToMinuteSeconds(avgTestTime);
+    this.stats.durationSuite = Math.floor(
+      this.stats.durationCPU / this.stats.workers,
+    );
+    this.stats.avgTestDuration = this.stats.durationCPU / (this.stats.totalTestsRun || 1);
+    this.stats.formattedAvgTestDuration = millisToMinuteSeconds(this.stats.avgTestDuration);
+    this.stats.formattedDurationSuite = millisToMinuteSeconds(this.stats.durationSuite);
     outputReport(this.stats, this.inputTemplate, this.outputFile);
   }
 }
@@ -78,21 +93,9 @@ function outputReport(
   outputFile: string = 'results.txt',
 ) {
   let reportString: string;
-
+  const report = new DefaultReport(stats);
   if (typeof inputTemplate === 'undefined') {
-    reportString = defaultReport(
-      stats.testsInSuite,
-      stats.totalCompleted,
-      stats.expectedResults,
-      stats.unexpectedResults,
-      stats.flakyTests,
-      stats.testMarkedSkipped,
-      stats.failureFree,
-      stats.duration,
-      stats.avgTestDuration,
-      stats.formattedDuration,
-      stats.formattedAvgTestDuration,
-    );
+    reportString = report.templateReport();
   } else {
     reportString = inputTemplate(stats);
   }
