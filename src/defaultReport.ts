@@ -1,4 +1,4 @@
-import Stats from './index';
+import type { Stats } from './types';
 
 export default class DefaultReport {
   stats: Stats;

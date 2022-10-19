@@ -11,7 +11,8 @@
     "build": "tsc -p ./tsconfig.json",
     "lint": "npx eslint . --ext .ts",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "typecheck": "tsc"
   },
   "repository": {
     "type": "git",

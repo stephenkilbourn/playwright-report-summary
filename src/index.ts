@@ -3,27 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { Reporter, TestCase, TestResult } from '@playwright/test/reporter';
-
+import type { Stats } from './types';
 import millisToMinuteSeconds from './utils';
-
 import DefaultReport from './defaultReport';
-
-export type Stats = {
-  testsInSuite: number;
-  totalTestsRun: number;
-  expectedResults: number;
-  unexpectedResults: number;
-  flakyTests: number;
-  testMarkedSkipped: number;
-  failureFree: boolean;
-  durationCPU: number;
-  durationSuite: number;
-  avgTestDuration: number;
-  formattedDurationSuite: string;
-  formattedAvgTestDuration: string;
-  failures: object;
-  workers: number;
-};
 
 const initialStats = (): Stats => ({
   testsInSuite: 0,
@@ -43,11 +25,11 @@ const initialStats = (): Stats => ({
 });
 
 class PlaywrightReportSummary implements Reporter {
-  private stats!: Stats;
-
   private outputFile: string;
 
   private inputTemplate: Function;
+
+  stats: Stats;
 
   constructor(options: { outputFile?: string; inputTemplate?: Function } = {}) {
     this.outputFile = options.outputFile;
