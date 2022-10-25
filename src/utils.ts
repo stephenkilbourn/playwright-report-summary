@@ -11,9 +11,6 @@ function millisToMinuteSeconds(milliseconds: number) {
     if (sec < 10) {
       return `${minString}:${secString} (mm:ss)`;
     }
-    if (sec === 60) {
-      return `${min + 1}:00 (mm:ss)`;
-    }
     return `${minString}:${secString} (mm:ss)`;
   }
   return '00:00 (mm:ss)';

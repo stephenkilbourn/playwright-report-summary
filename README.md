@@ -36,24 +36,31 @@ If you do not pass an outputFile option, then the summary will be generated to a
 ```txt
 Total Tests in Suite: 30,
 Total Tests Completed: 30,
-Tests Passed: 30,
+Tests Passed: 27,
 Tests Failed: 0,
 Flaky Tests: 0,
-Test Skipped: 0,
 Test run was failure free? true,
-Duration in ms: 234,
-Average Test Duration:0,
-Formatted Duration: 00:01 (mm:ss),
-Formatted Avg Test Duration: 00:01 (mm:ss)
+Test Skipped: 3,
+Duration of CPU usage in ms: 75188,
+Duration of entire test run in ms: 12531,
+Average Test Duration in ms:2506.3,
+Test Suite Duration: 00:13 (mm:ss),
+Average Test Duration: 00:03 (mm:ss),
+Number of workers used for test run: 6
 ```
 
 ## Customizing Outputs 👨‍💻
 
-To add a custom report leveraging your stats, create a function in the format:
+YOu may also create a custom report by leveraging the values in the `stats` object. To add a custom report leveraging your stats, create a function in the format:
 
 ```typescript
-module.exports = (stats) => `
-I completed  ${stats.totalCompleted} Total Tests in ${stats.formattedDuration}.`;
+import type { Stats } from '@skilbourn/playwright-report-summary';
+
+function customReport(stats: Stats) {
+  return `Greetings, hello, ${stats.expectedResults} tests passed as expected in ${stats.formattedDurationSuite}`;
+}
+
+export default customReport;
 ```
 
 and then modify your `playwright.config.ts` file with the following:
@@ -62,7 +69,8 @@ and then modify your `playwright.config.ts` file with the following:
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
 
-const customReport = require('./customReport'); // Your custom report path and preferred name
+import customReport from './customReport';
+ // Your custom report path and preferred name
 
 
 const config: PlaywrightTestConfig = {
@@ -73,8 +81,8 @@ const config: PlaywrightTestConfig = {
 
 ```
 
-this will generate a file such as :
+this will generate a `custom-summary.txt` file such as :
 
 ```txt
-I completed  30 Total Tests in 00:01 (mm:ss).
+hello, 50 tests passed as expected in 03:51 (mm:ss)
 ```
