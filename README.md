@@ -54,18 +54,13 @@ Number of workers used for test run: 6
 YOu may also create a custom report by leveraging the values in the `stats` object. To add a custom report leveraging your stats, create a function in the format:
 
 ```typescript
-import Stats from './index';
+import type { Stats } from '@skilbourn/playwright-report-summary';
 
-export default class CustomReport {
-  stats: Stats;
+function customReport(stats: Stats) {
+  return `Greetings, hello, ${stats.expectedResults} tests passed as expected in ${stats.formattedDurationSuite}`;
+}
 
-  constructor(stats) {
-    this.stats = stats;
-  }
-
-  templateReport() {
-    return (
-I completed  ${this.stats.totalCompleted} Total Tests in ${stats.formattedDuration}.`;
+export default customReport;
 ```
 
 and then modify your `playwright.config.ts` file with the following:
@@ -74,7 +69,7 @@ and then modify your `playwright.config.ts` file with the following:
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
 
-import CustomReport from './customReport';
+import customReport from './customReport';
  // Your custom report path and preferred name
 
 
@@ -86,8 +81,8 @@ const config: PlaywrightTestConfig = {
 
 ```
 
-this will generate a file such as :
+this will generate a `custom-summary.txt` file such as :
 
 ```txt
-I completed  30 Total Tests in 00:01 (mm:ss).
+hello, 50 tests passed as expected in 03:51 (mm:ss)
 ```

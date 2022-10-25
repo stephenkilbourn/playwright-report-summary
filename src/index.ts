@@ -27,11 +27,13 @@ const initialStats = (): Stats => ({
 class PlaywrightReportSummary implements Reporter {
   private outputFile: string;
 
-  private inputTemplate: Function;
+  private inputTemplate: () => string;
 
   stats: Stats;
 
-  constructor(options: { outputFile?: string; inputTemplate?: Function } = {}) {
+  constructor(
+    options: { outputFile?: string; inputTemplate?: () => string } = {},
+  ) {
     this.outputFile = options.outputFile;
     this.inputTemplate = options.inputTemplate;
   }
@@ -49,9 +51,11 @@ class PlaywrightReportSummary implements Reporter {
     if (outcome === 'expected') this.stats.expectedResults += 1;
     if (outcome === 'skipped') this.stats.testMarkedSkipped += 1;
     if (outcome === 'flaky') this.stats.flakyTests += 1;
-    if (outcome === 'unexpected' && retry === 0) {
+    if (outcome === 'unexpected') {
       this.stats.failures[test.title] = result.status;
-      this.stats.unexpectedResults += 1;
+      if (retry === 0) {
+        this.stats.unexpectedResults += 1;
+      }
     }
     this.stats.totalTestsRun += 1;
     this.stats.durationCPU += result.duration;
@@ -62,9 +66,14 @@ class PlaywrightReportSummary implements Reporter {
     this.stats.durationSuite = Math.floor(
       this.stats.durationCPU / this.stats.workers,
     );
-    this.stats.avgTestDuration = this.stats.durationCPU / (this.stats.totalTestsRun || 1);
-    this.stats.formattedAvgTestDuration = millisToMinuteSeconds(this.stats.avgTestDuration);
-    this.stats.formattedDurationSuite = millisToMinuteSeconds(this.stats.durationSuite);
+    this.stats.avgTestDuration =
+      this.stats.durationCPU / (this.stats.totalTestsRun || 1);
+    this.stats.formattedAvgTestDuration = millisToMinuteSeconds(
+      this.stats.avgTestDuration,
+    );
+    this.stats.formattedDurationSuite = millisToMinuteSeconds(
+      this.stats.durationSuite,
+    );
     outputReport(this.stats, this.inputTemplate, this.outputFile);
   }
 }
@@ -80,6 +89,9 @@ function outputReport(
     reportString = report.templateReport();
   } else {
     reportString = inputTemplate(stats);
+    if (typeof reportString !== 'string') {
+      throw new Error('custom input templates must return a string');
+    }
   }
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });

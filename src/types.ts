@@ -13,4 +13,4 @@ export type Stats = {
   formattedAvgTestDuration: string;
   failures: object;
   workers: number;
-}
+};

@@ -7,10 +7,10 @@ export default class DefaultReport {
     this.stats = stats;
   }
 
-  templateReport() {
+  templateReport(): string {
     return (
-    // eslint-disable-next-line indent
-`Total Tests in Suite: ${this.stats.testsInSuite},
+      // eslint-disable-next-line indent
+      `Total Tests in Suite: ${this.stats.testsInSuite},
 Total Tests Completed: ${this.stats.totalTestsRun},
 Tests Passed: ${this.stats.expectedResults},
 Tests Failed: ${this.stats.unexpectedResults},
@@ -19,7 +19,7 @@ Test Skipped: ${this.stats.testMarkedSkipped},
 Test run was failure free? ${this.stats.failureFree},
 Duration of CPU usage in ms: ${this.stats.durationCPU},
 Duration of entire test run in ms: ${this.stats.durationSuite},
-Average Test Duration in ms:${this.stats.avgTestDuration},
+Average Test Duration in ms: ${this.stats.avgTestDuration},
 Test Suite Duration: ${this.stats.formattedDurationSuite},
 Average Test Duration: ${this.stats.formattedAvgTestDuration},
 Number of workers used for test run: ${this.stats.workers}`
