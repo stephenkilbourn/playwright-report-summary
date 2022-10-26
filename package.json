@@ -13,7 +13,7 @@
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "test": "npx playwright test",
     "typecheck": "tsc",
-    "test:coverage": "nyc playwright test && nyc report --reporter=lcov"
+    "test:coverage": "nyc playwright test && nyc report --reporter=lcov --reporter=html"
   },
   "repository": {
     "type": "git",
