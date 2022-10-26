@@ -1,6 +1,6 @@
 {
   "name": "@skilbourn/playwright-report-summary",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "generate a customizable text summary of your playwright test results",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -31,8 +31,10 @@
   "homepage": "https://github.com/stephenkilbourn/playwright-report-summary#readme",
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@playwright/test": "^1.26.1",
+    "@playwright/test": "^1.27.1",
+    "@sinonjs/fake-timers": "^9.1.2",
     "@types/node": "^18.7.23",
+    "@types/sinonjs__fake-timers": "^8.1.2",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "babel-plugin-istanbul": "^6.1.1",
@@ -42,7 +44,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "mock-fs": "^5.1.4",
     "nyc": "^15.1.0",
-    "playwright": "^1.26.1",
+    "playwright": "^1.27.1",
     "playwright-test-coverage": "^1.2.0",
     "prettier": "^2.7.1",
     "source-map-support": "^0.5.21",
