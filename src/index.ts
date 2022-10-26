@@ -66,8 +66,7 @@ class PlaywrightReportSummary implements Reporter {
     this.stats.durationSuite = Math.floor(
       this.stats.durationCPU / this.stats.workers,
     );
-    this.stats.avgTestDuration =
-      this.stats.durationCPU / (this.stats.totalTestsRun || 1);
+    this.stats.avgTestDuration = this.stats.durationCPU / (this.stats.totalTestsRun || 1);
     this.stats.formattedAvgTestDuration = millisToMinuteSeconds(
       this.stats.avgTestDuration,
     );
