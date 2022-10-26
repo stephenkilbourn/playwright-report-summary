@@ -27,6 +27,10 @@ const initialStats = (): Stats => ({
 class PlaywrightReportSummary implements Reporter {
   private outputFile: string;
 
+  private startTime: number;
+
+  private endTime: number;
+
   private inputTemplate: () => string;
 
   stats: Stats;
@@ -39,6 +43,7 @@ class PlaywrightReportSummary implements Reporter {
   }
 
   onBegin(config, suite) {
+    this.startTime = Date.now();
     this.stats = initialStats();
     this.stats.testsInSuite = suite.allTests().length;
     this.stats.workers = config.workers;
@@ -63,10 +68,11 @@ class PlaywrightReportSummary implements Reporter {
   }
 
   async onEnd() {
-    this.stats.durationSuite = Math.floor(
-      this.stats.durationCPU / this.stats.workers,
+    this.endTime = Date.now();
+    this.stats.durationSuite = this.endTime - this.startTime;
+    this.stats.avgTestDuration = Math.ceil(
+      this.stats.durationCPU / (this.stats.totalTestsRun || 1),
     );
-    this.stats.avgTestDuration = this.stats.durationCPU / (this.stats.totalTestsRun || 1);
     this.stats.formattedAvgTestDuration = millisToMinuteSeconds(
       this.stats.avgTestDuration,
     );

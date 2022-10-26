@@ -4,6 +4,8 @@ import { readFileSync } from 'fs';
 import mock from 'mock-fs';
 import PlaywrightReportSummary from '../src/index';
 
+const FakeTimers = require('@sinonjs/fake-timers');
+
 type MockConfig = Pick<Config, 'workers'>;
 type MockSuite = Pick<Suite, 'allTests'>;
 type MockTestCase = Pick<TestCase, 'expectedStatus' | 'outcome' | 'title'>;
@@ -73,11 +75,14 @@ test.describe('Reporter handles stats', () => {
     const mockSuite: MockSuite = {
       allTests: () => [],
     };
-
     const playwrightReportSummary = new PlaywrightReportSummary();
 
+    const clock = FakeTimers.install();
+
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
+    clock.tick(10000);
     await playwrightReportSummary.onEnd();
+    clock.uninstall();
 
     const results = await playwrightReportSummary.stats;
     expect(results).toEqual({
@@ -89,9 +94,9 @@ test.describe('Reporter handles stats', () => {
       testMarkedSkipped: 0,
       failureFree: true,
       durationCPU: 0,
-      durationSuite: 0,
+      durationSuite: 10000,
       avgTestDuration: 0,
-      formattedDurationSuite: '00:00 (mm:ss)',
+      formattedDurationSuite: '00:10 (mm:ss)',
       formattedAvgTestDuration: '00:00 (mm:ss)',
       failures: {},
       workers: 1,
@@ -106,6 +111,7 @@ test.describe('Reporter handles stats', () => {
       // @ts-ignore
       allTests: () => [mockedPassingTest],
     };
+    const clock = FakeTimers.install();
     const playwrightReportSummary = new PlaywrightReportSummary();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
@@ -114,7 +120,9 @@ test.describe('Reporter handles stats', () => {
       mockedPassingTest,
       mockedPassingResult,
     );
+    clock.tick(10000);
     await playwrightReportSummary.onEnd();
+    clock.uninstall();
 
     const results = await playwrightReportSummary.stats;
     expect(results).toEqual({
@@ -144,6 +152,7 @@ test.describe('Reporter handles stats', () => {
       allTests: () => [mockedSkippedTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
+    const clock = FakeTimers.install();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
@@ -151,7 +160,9 @@ test.describe('Reporter handles stats', () => {
       mockedSkippedTest,
       mockedSkippedResult,
     );
+    clock.tick(10000);
     await playwrightReportSummary.onEnd();
+    clock.uninstall();
 
     const results = await playwrightReportSummary.stats;
     expect(results).toEqual({
@@ -163,9 +174,9 @@ test.describe('Reporter handles stats', () => {
       testMarkedSkipped: 1,
       failureFree: true,
       durationCPU: 0,
-      durationSuite: 0,
+      durationSuite: 10000,
       avgTestDuration: 0,
-      formattedDurationSuite: '00:00 (mm:ss)',
+      formattedDurationSuite: '00:10 (mm:ss)',
       formattedAvgTestDuration: '00:00 (mm:ss)',
       failures: {},
       workers: 1,
@@ -181,19 +192,23 @@ test.describe('Reporter handles stats', () => {
       allTests: () => [mockedPassingTest, mockedPassingTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
+    const clock = FakeTimers.install();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
+    clock.tick(10000);
     await playwrightReportSummary.onTestEnd(
       // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
+    clock.tick(10000);
     await playwrightReportSummary.onTestEnd(
       // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
     await playwrightReportSummary.onEnd();
+    clock.uninstall();
 
     const results = await playwrightReportSummary.stats;
     expect(results).toEqual({
@@ -223,8 +238,10 @@ test.describe('Reporter handles stats', () => {
       allTests: () => [mockedPassingTest, mockedPassingTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
+    const clock = FakeTimers.install();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
+
     await playwrightReportSummary.onTestEnd(
       // @ts-ignore
       mockedPassingTest,
@@ -235,7 +252,9 @@ test.describe('Reporter handles stats', () => {
       mockedPassingTest,
       mockedPassingResult,
     );
+    clock.tick(10000);
     await playwrightReportSummary.onEnd();
+    clock.uninstall();
 
     const results = await playwrightReportSummary.stats;
     expect(results).toEqual({
@@ -265,6 +284,7 @@ test.describe('Reporter handles stats', () => {
       allTests: () => [mockedFailingTest, mockedPassingTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
+    const clock = FakeTimers.install();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
@@ -278,7 +298,9 @@ test.describe('Reporter handles stats', () => {
       mockedPassingResult,
     );
 
+    clock.tick(10000);
     await playwrightReportSummary.onEnd();
+    clock.uninstall();
 
     const results = await playwrightReportSummary.stats;
     expect(results).toEqual({
@@ -308,6 +330,7 @@ test.describe('Reporter handles stats', () => {
       allTests: () => [mockedPassingTestAfterRetries],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
+    const clock = FakeTimers.install();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
@@ -326,7 +349,9 @@ test.describe('Reporter handles stats', () => {
       mockedPassingResultAfterRetries,
     );
 
+    clock.tick(30000);
     await playwrightReportSummary.onEnd();
+    clock.uninstall();
 
     const results = await playwrightReportSummary.stats;
     expect(results).toEqual({
