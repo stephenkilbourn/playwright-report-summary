@@ -461,10 +461,8 @@ Number of workers used for test run: 1`;
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
 
-    expect(async () => {
+    await expect(async () => {
       await playwrightReportSummary.onEnd();
-    }).rejects.toThrow({
-      Error: 'custom input templates must return a string',
-    });
+    }).rejects.toThrow();
   });
 });

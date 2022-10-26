@@ -8,7 +8,7 @@ test.describe('(millisToMinutesSeconds', () => {
   });
 
   test('handles less than 1 second', () => {
-    const result = millisToMinuteSeconds(1000);
+    const result = millisToMinuteSeconds(100);
     expect(result).toEqual('00:01 (mm:ss)');
   });
   test('handles less than 10 seconds', () => {
