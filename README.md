@@ -5,14 +5,13 @@
 Small text based custom reporter for Playwright.
 It can be handy to publish test results for things such as an SNS message or minimal Slack update. This Tool allows you to generate smaller reports with basic info about your test run.
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 ## Table of Contents
 
-* [✨ Installation ✨](#✨-installation-✨)
-* [📍 Configuration 📍](#📍-configuration-📍)
-* [ Default Output 📜](#default-output-📜)
-* [Customizing Outputs 👨‍💻](#customizing-outputs-👨‍💻)
-* [Available  Stats 🧰](#available-stats-🧰)
+* [✨ Installation ✨](#-configuration-)
+* [📍 Configuration 📍](#-configuration-)
+* [ Default Output 📜](#default-output-)
+* [Customizing Outputs 👨‍💻](#customizing-outputs-)
+* [Available Stats 🧰](#available-stats-)
 
 ## ✨ Installation ✨
 
@@ -32,7 +31,7 @@ Modify your `playwright.config.ts` file to include the reporter:
 
 ```typescript
   reporter: [
-    ['@skilbourn/playwright-report-summary', { outputFile: 'custom-summary.txt' }]]
+    ['@skilbourn/playwright-report-summary', { outputFile: 'custom-summary.txt' }]],
     ['html'], // other reporters
     ['dot']
   ],
@@ -98,7 +97,7 @@ this will generate a `custom-summary.txt` file such as :
 hello, 50 tests passed as expected in 03:51 (mm:ss)
 ```
 
-## Available  Stats 🧰
+## Available Stats 🧰
 
 The `stats` object provides information on your test suite:
 
