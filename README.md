@@ -104,8 +104,7 @@ The `stats` object provides information on your test suite:
 | **Name**                 | **type** | **Description**                                                                                                                                                  |
 |--------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | testsInSuite             | number   | Total number of tests in suite                                                                                                                                   |
-| totalTestsRun            | number   | t
-otal tests run. Retried tests can make this value larger than testsInSuite                                                                                      |
+| totalTestsRun            | number   | total tests run. Retried tests can make this value larger than testsInSuite                                                                                      |
 | expectedResults          | number   | total test finished as [expected](https://playwright.dev/docs/api/class-testcase#test-case-expected-status)                                                      |
 | unexpectedResults        | number   | total tests not finished as expected                                                                                                                             |
 | flakyTests               | number   | total of tests that passed when retried                                                                                                                          |
