@@ -103,12 +103,14 @@ test.describe('Reporter handles stats', () => {
       workers: 1,
     };
     const mockSuite: MockSuite = {
+      // @ts-ignore
       allTests: () => [mockedPassingTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
@@ -138,12 +140,14 @@ test.describe('Reporter handles stats', () => {
       workers: 1,
     };
     const mockSuite: MockSuite = {
+      // @ts-ignore
       allTests: () => [mockedSkippedTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedSkippedTest,
       mockedSkippedResult,
     );
@@ -173,16 +177,19 @@ test.describe('Reporter handles stats', () => {
       workers: 1,
     };
     const mockSuite: MockSuite = {
+      // @ts-ignore
       allTests: () => [mockedPassingTest, mockedPassingTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
@@ -212,16 +219,19 @@ test.describe('Reporter handles stats', () => {
       workers: 2,
     };
     const mockSuite: MockSuite = {
+      // @ts-ignore
       allTests: () => [mockedPassingTest, mockedPassingTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
@@ -251,16 +261,19 @@ test.describe('Reporter handles stats', () => {
       workers: 2,
     };
     const mockSuite: MockSuite = {
+      // @ts-ignore
       allTests: () => [mockedFailingTest, mockedPassingTest],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedFailingTest,
       mockedFailingResult,
     );
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedPassingTest,
       mockedPassingResult,
     );
@@ -291,20 +304,24 @@ test.describe('Reporter handles stats', () => {
       workers: 1,
     };
     const mockSuite: MockSuite = {
+      // @ts-ignore
       allTests: () => [mockedPassingTestAfterRetries],
     };
     const playwrightReportSummary = new PlaywrightReportSummary();
 
     await playwrightReportSummary.onBegin(mockConfig, mockSuite);
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedFailingTest,
       mockedFailingResult,
     );
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedTimedOutTest,
       mockedTimedOutResult,
     );
     await playwrightReportSummary.onTestEnd(
+      // @ts-ignore
       mockedPassingTestAfterRetries,
       mockedPassingResultAfterRetries,
     );
@@ -437,6 +454,8 @@ Number of workers used for test run: 1`;
     };
 
     const playwrightReportSummary = new PlaywrightReportSummary({
+      // ignoring the error to test scenario if someone ignores type
+      // @ts-ignore
       inputTemplate: testInputTemplate,
     });
 
