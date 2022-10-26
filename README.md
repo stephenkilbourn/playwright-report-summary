@@ -1,5 +1,7 @@
 # 📜 🎭 Playwright Report Summary  🎭  📜
 
+[![Coverage Status](https://coveralls.io/repos/github/stephenkilbourn/playwright-report-summary/badge.svg?branch=main)](https://coveralls.io/github/stephenkilbourn/playwright-report-summary?branch=main)
+
 Small text based custom reporter for Playwright.
 It can be handy to publish test results for things such as an SNS message or minimal Slack update. This Tool allows you to generate smaller reports with basic info about your test run.
 
