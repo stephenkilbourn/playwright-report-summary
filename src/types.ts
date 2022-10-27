@@ -14,3 +14,7 @@ export type Stats = {
   failures: object;
   workers: number;
 };
+
+export type OutputFile = string;
+
+export type InputTemplate = () => string;

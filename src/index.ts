@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { Reporter, TestCase, TestResult } from '@playwright/test/reporter';
-import type { Stats } from './types';
+import type { Stats, InputTemplate, OutputFile } from './types';
 import millisToMinuteSeconds from './utils';
 import DefaultReport from './defaultReport';
 
@@ -25,13 +25,13 @@ const initialStats = (): Stats => ({
 });
 
 class PlaywrightReportSummary implements Reporter {
-  private outputFile: string;
+  outputFile: OutputFile;
 
   private startTime: number;
 
   private endTime: number;
 
-  private inputTemplate: () => string;
+  inputTemplate: InputTemplate;
 
   stats: Stats;
 
