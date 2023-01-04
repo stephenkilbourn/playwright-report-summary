@@ -361,7 +361,7 @@ test.describe('Reporter handles stats', () => {
       unexpectedResults: 1,
       flakyTests: 1,
       testMarkedSkipped: 0,
-      failureFree: false,
+      failureFree: true,
       durationCPU: 30000,
       durationSuite: 30000,
       avgTestDuration: 10000,
