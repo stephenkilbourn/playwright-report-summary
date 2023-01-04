@@ -1,6 +1,6 @@
 {
   "name": "@skilbourn/playwright-report-summary",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "generate a customizable text summary of your playwright test results",
   "main": "./dist/index.js",
   "types": "./dist/types.d.ts",
