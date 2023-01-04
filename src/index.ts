@@ -64,7 +64,7 @@ class PlaywrightReportSummary implements Reporter {
     }
     this.stats.totalTestsRun += 1;
     this.stats.durationCPU += result.duration;
-    this.stats.failureFree = this.stats.unexpectedResults === 0;
+    this.stats.failureFree = (this.stats.unexpectedResults - this.stats.flakyTests) === 0;
   }
 
   async onEnd() {

@@ -109,7 +109,7 @@ The `stats` object provides information on your test suite:
 | unexpectedResults        | number   | total tests not finished as expected                                                                                                                             |
 | flakyTests               | number   | total of tests that passed when retried                                                                                                                          |
 | testMarkedSkipped        | number   | total tests marked as test.skip() or test.fixme()                                                                                                                |
-| failureFree              | boolean  | returns `true` if suite completes with unexpectedResults = 0                                                                                                     |
+| failureFree              | boolean  | returns `true` if suite completes with all test completing as expected after retries                                                                             |
 | durationCPU              | number   | total milliseconds spent run tests. If tests run parallel with multiple workers, this value will be larger than the duration of running the suite                |
 | durationSuite            | number   | milliseconds to complete all tests in suite                                                                                                                      |
 | avgTestDuration          | number   | average test duration of all tests in milliseconds                                                                                                               |
