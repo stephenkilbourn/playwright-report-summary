@@ -42,6 +42,10 @@ class PlaywrightReportSummary implements Reporter {
     this.inputTemplate = options.inputTemplate;
   }
 
+  printsToStdio() {
+    return false;
+  }
+
   onBegin(config, suite) {
     this.startTime = Date.now();
     this.stats = initialStats();
